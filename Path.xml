@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="URL">
+        http://images.stg.tldev.biz/1/data.json.txt
+    </entry>
+    <entry key="Directory1">C:\newDirectory\</entry>
+    <entry key="Directory2">C:\newDirectory\Directory\</entry>
+</properties>
