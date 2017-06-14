@@ -4,6 +4,6 @@
     <entry key="URL">
         http://images.stg.tldev.biz/1/data.json.txt
     </entry>
-    <entry key="Directory1">C:\newDirectory\</entry>
+    <entry key="Directory1">CDirectory\</entry>
     <entry key="Directory2">C:\newDirectory\Directory\</entry>
 </properties>

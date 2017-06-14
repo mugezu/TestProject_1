@@ -1,5 +1,6 @@
 package test;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 
 import javax.imageio.ImageIO;
@@ -11,7 +12,8 @@ import java.net.URL;
  * Created by Роман on 07.06.2017.
  */
 public class ReadUrl {
-    private static final Logger log = Logger.getLogger(ReadUrl.class);
+    private static final String DEFAULT_PATH = "C:\\newDirectory\\";
+    protected final Logger log = Logger.getLogger(this.getClass());
 
     public String readUrl(String nameUrl) {
         log.info("Read Json from URL - started");
@@ -29,10 +31,7 @@ public class ReadUrl {
             }
         } catch (IOException e) {
             log.error(e.getMessage());
-            StackTraceElement[] stackTraceElements = e.getStackTrace();
-            for (int i = 0; i < stackTraceElements.length; i++) {
-                log.error(stackTraceElements[i].toString());
-            }
+            log.error(util.stackTrace(e));
         } finally {
             return data.toString();
         }
@@ -47,29 +46,23 @@ public class ReadUrl {
             File folder = new File(filePath);
             nameFile += url.getFile().substring(1, url.getFile().length());
             folder.mkdirs();
+            if (new File(filePath).exists()) {
+                log.warn("Invalid directory");
+                filePath = DEFAULT_PATH;
+                new File(filePath).mkdirs();
+                log.warn("Current directory: " + filePath);
+            }
             try (FileOutputStream fileOutputStream = (new FileOutputStream(filePath + nameFile))) {
-                ImageIO.write(image, getFileExtension(nameFile), fileOutputStream);
+                ImageIO.write(image, FilenameUtils.getExtension(nameFile), fileOutputStream);
                 log.info("Save file. URL:" + nameUrl + " ->Finish");
             } catch (FileNotFoundException e) {
                 log.error(e.getMessage());
-                StackTraceElement[] stackTraceElements = e.getStackTrace();
-                for (int i = 0; i < stackTraceElements.length; i++) {
-                    log.error(stackTraceElements[i].toString());
-                }
+                log.error(util.stackTrace(e));
             }
 
         } catch (IOException e) {
             log.error(e.getMessage());
-            StackTraceElement[] stackTraceElements = e.getStackTrace();
-            for (int i = 0; i < stackTraceElements.length; i++) {
-                log.error(stackTraceElements[i].toString());
-            }
+            log.error(util.stackTrace(e));
         }
-    }
-
-    private String getFileExtension(String fileName) {
-        if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
-            return fileName.substring(fileName.lastIndexOf(".") + 1);
-        else return "";
     }
 }
